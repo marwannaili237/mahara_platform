@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f172a"
+    tools:context=".MainActivity">
+
+    <!-- Loading Screen -->
+    <LinearLayout
+        android:id="@+id/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0f172a"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Mahara"
+            android:textColor="#ffffff"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Local Services Marketplace"
+            android:textColor="#94a3b8"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#3b82f6" />
+
+    </LinearLayout>
+
+    <!-- WebView -->
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+
+</RelativeLayout>
+

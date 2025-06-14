@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mahara</string>
+    <string name="app_description">Local Services Marketplace</string>
+    <string name="loading">Loading...</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="permission_camera">Camera permission is needed to take photos.</string>
+    <string name="permission_location">Location permission is needed to find nearby services.</string>
+    <string name="permission_storage">Storage permission is needed to save files.</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="search_services">Search for services...</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="connecting">Connecting...</string>
+    <string name="update_available">Update Available</string>
+    <string name="update_message">A new version of Mahara is available. Would you like to update?</string>
+    <string name="update_now">Update Now</string>
+    <string name="update_later">Later</string>
+</resources>
+

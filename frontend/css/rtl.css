@@ -1,0 +1,463 @@
+/* RTL (Right-to-Left) Styles for Arabic */
+
+/* Apply RTL styles when html has dir="rtl" */
+html[dir="rtl"] {
+    direction: rtl;
+}
+
+/* RTL Typography */
+html[dir="rtl"] body {
+    font-family: 'Cairo', 'Inter', sans-serif;
+    text-align: right;
+}
+
+/* RTL Navigation */
+html[dir="rtl"] .nav-content {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .logo {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .logo-img {
+    margin-left: 0;
+    margin-right: var(--space-2);
+}
+
+html[dir="rtl"] .nav-menu {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .nav-actions {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .auth-buttons {
+    flex-direction: row-reverse;
+}
+
+/* RTL Language Switcher */
+html[dir="rtl"] .lang-dropdown {
+    right: auto;
+    left: 0;
+}
+
+html[dir="rtl"] .lang-btn {
+    flex-direction: row-reverse;
+}
+
+/* RTL User Menu */
+html[dir="rtl"] .user-btn {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .user-dropdown {
+    right: auto;
+    left: 0;
+}
+
+html[dir="rtl"] .dropdown-item {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+/* RTL Search Form */
+html[dir="rtl"] .search-icon {
+    left: auto;
+    right: var(--space-4);
+}
+
+html[dir="rtl"] .search-input {
+    padding: var(--space-4) var(--space-12) var(--space-4) var(--space-4);
+    text-align: right;
+}
+
+html[dir="rtl"] .location-icon {
+    left: auto;
+    right: var(--space-4);
+}
+
+html[dir="rtl"] .location-select {
+    padding: var(--space-4) var(--space-12) var(--space-4) var(--space-4);
+    text-align: right;
+}
+
+/* RTL Category Tags */
+html[dir="rtl"] .category-tag {
+    flex-direction: row-reverse;
+}
+
+/* RTL Steps */
+html[dir="rtl"] .steps-container {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .step-number {
+    right: auto;
+    left: -10px;
+}
+
+/* RTL Forms */
+html[dir="rtl"] .form-group input,
+html[dir="rtl"] .form-group select {
+    text-align: right;
+}
+
+html[dir="rtl"] .form-group label {
+    text-align: right;
+}
+
+/* RTL Modal */
+html[dir="rtl"] .modal-header {
+    flex-direction: row-reverse;
+}
+
+/* RTL Service Cards (when implemented) */
+html[dir="rtl"] .service-card {
+    text-align: right;
+}
+
+html[dir="rtl"] .service-card .card-header {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .service-card .card-footer {
+    flex-direction: row-reverse;
+}
+
+/* RTL Buttons with Icons */
+html[dir="rtl"] .btn {
+    flex-direction: row-reverse;
+}
+
+/* RTL Animations - Reverse slide directions */
+html[dir="rtl"] .slide-in-right {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+html[dir="rtl"] .slide-in-left {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* RTL Text Alignment Utilities */
+html[dir="rtl"] .text-left {
+    text-align: right;
+}
+
+html[dir="rtl"] .text-right {
+    text-align: left;
+}
+
+/* RTL Margins and Paddings - Flip left/right */
+html[dir="rtl"] .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+html[dir="rtl"] .pl-4 {
+    padding-left: 0;
+    padding-right: var(--space-4);
+}
+
+html[dir="rtl"] .pr-4 {
+    padding-right: 0;
+    padding-left: var(--space-4);
+}
+
+/* RTL Positioning - Flip left/right */
+html[dir="rtl"] .left-0 {
+    left: auto;
+    right: 0;
+}
+
+html[dir="rtl"] .right-0 {
+    right: auto;
+    left: 0;
+}
+
+/* RTL Borders - Flip left/right */
+html[dir="rtl"] .border-l {
+    border-left: none;
+    border-right: 1px solid var(--gray-200);
+}
+
+html[dir="rtl"] .border-r {
+    border-right: none;
+    border-left: 1px solid var(--gray-200);
+}
+
+/* RTL Flexbox - Reverse when needed */
+html[dir="rtl"] .flex-row-reverse {
+    flex-direction: row;
+}
+
+html[dir="rtl"] .flex-row {
+    flex-direction: row-reverse;
+}
+
+/* RTL Grid - Adjust grid areas if needed */
+html[dir="rtl"] .grid-cols-auto-fit {
+    direction: ltr; /* Keep grid direction LTR for proper layout */
+}
+
+html[dir="rtl"] .grid-cols-auto-fit > * {
+    direction: rtl; /* But content inside should be RTL */
+}
+
+/* RTL Specific Font Weights for Arabic */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6 {
+    font-weight: 700; /* Arabic fonts often need heavier weights */
+}
+
+html[dir="rtl"] .font-medium {
+    font-weight: 600;
+}
+
+html[dir="rtl"] .font-semibold {
+    font-weight: 700;
+}
+
+/* RTL Line Height Adjustments for Arabic */
+html[dir="rtl"] p,
+html[dir="rtl"] .text-base {
+    line-height: 1.8; /* Arabic text often needs more line height */
+}
+
+/* RTL Number Formatting */
+html[dir="rtl"] .number {
+    direction: ltr;
+    display: inline-block;
+}
+
+/* RTL Input Placeholders */
+html[dir="rtl"] input::placeholder,
+html[dir="rtl"] textarea::placeholder {
+    text-align: right;
+}
+
+/* RTL Mobile Menu Adjustments */
+@media (max-width: 767px) {
+    html[dir="rtl"] .mobile-menu {
+        right: auto;
+        left: 0;
+    }
+    
+    html[dir="rtl"] .mobile-menu-toggle {
+        order: -1;
+    }
+}
+
+/* RTL Dropdown Menus */
+html[dir="rtl"] .dropdown-menu {
+    right: auto;
+    left: 0;
+    text-align: right;
+}
+
+/* RTL Tooltips */
+html[dir="rtl"] .tooltip {
+    direction: rtl;
+    text-align: right;
+}
+
+/* RTL Breadcrumbs */
+html[dir="rtl"] .breadcrumb {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .breadcrumb-separator::before {
+    content: "\\";
+    transform: scaleX(-1);
+}
+
+/* RTL Pagination */
+html[dir="rtl"] .pagination {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .pagination-prev {
+    order: 2;
+}
+
+html[dir="rtl"] .pagination-next {
+    order: -1;
+}
+
+/* RTL Tables */
+html[dir="rtl"] table {
+    direction: rtl;
+}
+
+html[dir="rtl"] th,
+html[dir="rtl"] td {
+    text-align: right;
+}
+
+/* RTL Progress Bars */
+html[dir="rtl"] .progress-bar {
+    direction: ltr; /* Keep progress direction LTR */
+}
+
+/* RTL Carousel/Slider Controls */
+html[dir="rtl"] .carousel-prev {
+    right: auto;
+    left: var(--space-4);
+}
+
+html[dir="rtl"] .carousel-next {
+    left: auto;
+    right: var(--space-4);
+}
+
+/* RTL Chat/Message Bubbles */
+html[dir="rtl"] .message-bubble {
+    text-align: right;
+}
+
+html[dir="rtl"] .message-bubble.sent {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+html[dir="rtl"] .message-bubble.received {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+/* RTL Search Results */
+html[dir="rtl"] .search-result {
+    text-align: right;
+}
+
+html[dir="rtl"] .search-result-meta {
+    flex-direction: row-reverse;
+}
+
+/* RTL Cards */
+html[dir="rtl"] .card {
+    text-align: right;
+}
+
+html[dir="rtl"] .card-header {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .card-footer {
+    flex-direction: row-reverse;
+}
+
+/* RTL Alerts */
+html[dir="rtl"] .alert {
+    text-align: right;
+}
+
+html[dir="rtl"] .alert-icon {
+    margin-left: var(--space-3);
+    margin-right: 0;
+}
+
+/* RTL Tabs */
+html[dir="rtl"] .tab-list {
+    flex-direction: row-reverse;
+}
+
+/* RTL Accordion */
+html[dir="rtl"] .accordion-header {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .accordion-icon {
+    margin-left: var(--space-3);
+    margin-right: 0;
+}
+
+/* RTL Statistics/Counters */
+html[dir="rtl"] .stat-item {
+    text-align: center; /* Keep stats centered */
+}
+
+/* RTL Social Media Icons */
+html[dir="rtl"] .social-links {
+    flex-direction: row-reverse;
+}
+
+/* RTL Footer */
+html[dir="rtl"] .footer {
+    text-align: right;
+}
+
+html[dir="rtl"] .footer-columns {
+    flex-direction: row-reverse;
+}
+
+/* RTL Logo in RTL mode */
+html[dir="rtl"] .logo-text {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+}
+
+/* Ensure proper Arabic numeral display */
+html[dir="rtl"] .arabic-numerals {
+    font-feature-settings: "lnum" 1;
+}
+
+/* RTL specific animations */
+html[dir="rtl"] .animate-slide-in {
+    animation: slideInFromRight 0.5s ease-out;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* RTL Print Styles */
+@media print {
+    html[dir="rtl"] {
+        direction: rtl;
+    }
+    
+    html[dir="rtl"] * {
+        text-align: right !important;
+    }
+}
+
