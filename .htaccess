@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Rewrite all requests to backend/index.php if they start with /backend/
+    RewriteRule ^backend/(.*)$ backend/index.php [L,QSA]
+
+    # If the request is not for a file or directory, rewrite to frontend/index.html
+    # This handles your single-page application routing
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^((?!backend/).*)$ frontend/index.html [L]
+</IfModule>
