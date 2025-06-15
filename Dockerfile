@@ -20,10 +20,10 @@ RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html
 
 # Remove default Apache site configuration to prevent conflicts
-RUN rm /etc/apache2/sites-enabled/000-default.conf
+
 
 # Copy and enable your custom Apache configuration file
-COPY 000-default.conf /etc/apache2/sites-available/mahara.conf
+
 RUN a2ensite mahara.conf
 
 # Set the working directory
