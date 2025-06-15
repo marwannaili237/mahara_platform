@@ -13,16 +13,15 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Copy your entire project to the Apache document root
+# This will put backend/, frontend/, database/, etc. directly in /var/www/html/
 COPY . /var/www/html/
-
-# Copy the custom Apache configuration file
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-
-# Enable the custom configuration (it's usually enabled by default, but good to be explicit)
-RUN a2ensite 000-default.conf
 
 # Set the working directory
 WORKDIR /var/www/html
+
+# Ensure Apache serves index.php for the backend API and index.html for the frontend
+# We'll use .htaccess for routing
+COPY .htaccess /var/www/html/
 
 # Expose port 80 (Apache default)
 EXPOSE 80
