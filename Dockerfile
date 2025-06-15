@@ -1,5 +1,5 @@
 # Use an official PHP image with Apache
-FROM php:8.2-apache
+FROM php:8.4.8-zts-alpine3.21
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
