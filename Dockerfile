@@ -13,15 +13,21 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Copy your entire project to the Apache document root
-# This will put backend/, frontend/, database/, etc. directly in /var/www/html/
 COPY . /var/www/html/
+
+# Set correct permissions for Apache to read files
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
+
+# Remove default Apache site configuration to prevent conflicts
+RUN rm /etc/apache2/sites-enabled/000-default.conf
+
+# Copy and enable your custom Apache configuration file
+COPY 000-default.conf /etc/apache2/sites-available/mahara.conf
+RUN a2ensite mahara.conf
 
 # Set the working directory
 WORKDIR /var/www/html
 
-# Ensure Apache serves index.php for the backend API and index.html for the frontend
-# We'll use .htaccess for routing
-COPY .htaccess /var/www/html/
-
-# Expose port 8080 (Apache default)
-EXPOSE 8080
+# Expose port 80 (Apache default)
+EXPOSE 80
