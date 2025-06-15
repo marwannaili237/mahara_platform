@@ -38,6 +38,12 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });
