@@ -2,8 +2,8 @@
     RewriteEngine On
     RewriteBase /
 
-    # If the request is not for a file or directory that exists, rewrite to index.html
+    # Rewrite all requests to index.php if they are not for existing files/directories
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /index.html [L]
+    RewriteRule ^(.*)$ index.php [L,QSA]
 </IfModule>
