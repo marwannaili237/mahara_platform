@@ -1,13 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    # This .htaccess is now in /var/www/html/
+    # Rules here might apply if not overridden by .htaccess in subdirectories
+    # or if requests don't match DocumentRoot or Alias directly.
 
-    # Rewrite all requests to backend/index.php if they start with /backend/
-    RewriteRule ^backend/(.*)$ backend/index.php [L,QSA]
-
-    # If the request is not for a file or directory, rewrite to frontend/index.html
-    # This handles your single-page application routing
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^((?!backend/).*)$ frontend/index.html [L]
+    # Example: If you had specific global rules, they could go here.
+    # For now, we rely on the Alias for /backend and DocumentRoot for frontend.
 </IfModule>
