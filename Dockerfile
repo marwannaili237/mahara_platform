@@ -24,7 +24,6 @@ RUN chmod -R 755 /var/www/html
 
 # Copy and enable your custom Apache configuration file
 
-RUN a2ensite mahara.conf
 
 # Set the working directory
 WORKDIR /var/www/html
