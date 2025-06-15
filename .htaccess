@@ -1,9 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    # RewriteBase /  <-- REMOVE THIS LINE
+    RewriteBase /
 
-    # If the request is not for a file or directory that exists, rewrite to index.html
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /index.html [L]
+    RewriteRule ^ index.html [L]
 </IfModule>

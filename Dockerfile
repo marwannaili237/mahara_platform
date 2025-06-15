@@ -1,41 +1,40 @@
-# Use an official PHP image with Apache
+# Use official PHP Apache image
 FROM php:8.2-apache
 
-# Install system dependencies and PHP extensions
+# Install system dependencies & PHP extensions
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    libonig-dev \
-    libpng-dev \
-    libjpeg-dev \
+    libzip-dev libonig-dev libpng-dev libjpeg-dev \
     && docker-php-ext-install -j$(nproc) pdo_mysql mysqli mbstring gd
 
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Remove default Apache site configuration to prevent conflicts
-RUN rm -f /etc/apache2/sites-enabled/000-default.conf
+# Remove the default site config (optional safety)
+RUN rm /etc/apache2/sites-enabled/000-default.conf
 
-# Copy the CONTENTS of your frontend/ directory to the Apache DocumentRoot
-COPY frontend/ /var/www/html/
-
-# Copy your backend/ directory as a subdirectory
-COPY backend/ /var/www/html/backend/
-
-# Copy your database/ directory as a subdirectory (optional, for reference)
-COPY database/ /var/www/html/database/
-
-# Copy your custom Apache configuration file
+# Copy your custom Apache configuration
 COPY mahara.conf /etc/apache2/sites-available/mahara.conf
 
-# Enable the custom configuration
+# Enable your site
 RUN a2ensite mahara.conf
 
-# Set correct permissions for Apache to read files
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 755 /var/www/html
+# Copy frontend into web root
+COPY frontend/ /var/www/html/
 
-# Set the working directory
+# Copy backend and admin as subdirs
+COPY backend/ /var/www/html/backend/
+COPY admin/ /var/www/html/admin/
+
+# Copy .htaccess to support SPA routing
+COPY .htaccess /var/www/html/.htaccess
+
+# Set correct permissions (prevent 403 Forbidden)
+RUN chown -R www-data:www-data /var/www/html && \
+    find /var/www/html -type d -exec chmod 755 {} \; && \
+    find /var/www/html -type f -exec chmod 644 {} \;
+
+# Set working directory
 WORKDIR /var/www/html
 
-# Expose port 80 (Apache default)
+# Expose port for Railway
 EXPOSE 80
