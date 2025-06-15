@@ -210,7 +210,7 @@ function loginUser($email, $password) {
     $token = generateJWT($payload);
     
     // Update last login
-    dbUpdate("UPDATE users SET updated_at = NOW() WHERE id = ?", [$user['id']]);
+    dbUpdate("UPDATE users SET updated_at = CURRENT_TIMESTAMP WHERE id = ?", [$user['id']]);
     
     return [
         'token' => $token,

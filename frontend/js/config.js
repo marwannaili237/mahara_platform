@@ -1,7 +1,7 @@
 // Mahara Platform Configuration
 const CONFIG = {
     // API Configuration
-    API_BASE_URL: 'https://maharaplatform-production-b86b.up.railway.app/backend',
+    API_BASE_URL: 'http://localhost:8000/backend/test_index.php',
     API_ENDPOINTS: {
         AUTH: {
             LOGIN: '/auth/login',
