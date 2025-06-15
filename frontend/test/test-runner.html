@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahara Frontend Tests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .test-pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-summary {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .test-pass-summary {
+            color: #155724;
+        }
+        .test-fail-summary {
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mahara Frontend JavaScript Tests</h1>
+    <div id="test-results"></div>
+
+    <!-- Mock dependencies -->
+    <script>
+        // Mock CONFIG object
+        window.CONFIG = {
+            UI: {
+                DEBOUNCE_DELAY: 300
+            },
+            DEFAULT_IMAGES: {
+                SERVICE: '/images/default-service.jpg',
+                USER: '/images/default-user.jpg'
+            }
+        };
+
+        // Mock T (Translation) object
+        window.T = {
+            getCurrentLanguage: () => 'en',
+            formatNumber: (num) => num.toLocaleString(),
+            setLanguage: (lang) => console.log('Language set to:', lang),
+            updatePageLanguage: () => console.log('Page language updated')
+        };
+
+        // Mock t function
+        window.t = (key) => {
+            const translations = {
+                'stats.services': 'services',
+                'services.no_featured': 'No featured services available',
+                'service.featured': 'Featured',
+                'service.location.flexible': 'Flexible location',
+                'common.view': 'View',
+                'service.book': 'Book'
+            };
+            return translations[key] || key;
+        };
+
+        // Mock Auth object
+        window.Auth = {
+            init: async () => console.log('Auth initialized'),
+            isLoggedIn: () => false
+        };
+
+        // Mock API object
+        window.API = {
+            getCategories: async () => ({ success: true, data: [] }),
+            getFeaturedServices: async () => ({ success: true, data: [] })
+        };
+
+        // Mock APIUtils
+        window.APIUtils = {
+            debounce: (func, delay) => {
+                let timeoutId;
+                return function (...args) {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+        };
+    </script>
+
+    <!-- Include the main.js file -->
+    <script src="../js/main.js"></script>
+
+    <!-- Test framework -->
+    <script>
+        class TestFramework {
+            constructor() {
+                this.tests = [];
+                this.passed = 0;
+                this.failed = 0;
+            }
+
+            describe(description, testFunction) {
+                console.log(`\n=== ${description} ===`);
+                testFunction();
+            }
+
+            it(description, testFunction) {
+                try {
+                    testFunction();
+                    this.addResult(description, true);
+                    this.passed++;
+                } catch (error) {
+                    this.addResult(description, false, error.message);
+                    this.failed++;
+                }
+            }
+
+            expect(actual) {
+                return {
+                    toBe: (expected) => {
+                        if (actual !== expected) {
+                            throw new Error(`Expected ${expected}, but got ${actual}`);
+                        }
+                    },
+                    toEqual: (expected) => {
+                        if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+                            throw new Error(`Expected ${JSON.stringify(expected)}, but got ${JSON.stringify(actual)}`);
+                        }
+                    },
+                    toBeTruthy: () => {
+                        if (!actual) {
+                            throw new Error(`Expected truthy value, but got ${actual}`);
+                        }
+                    },
+                    toBeFalsy: () => {
+                        if (actual) {
+                            throw new Error(`Expected falsy value, but got ${actual}`);
+                        }
+                    },
+                    toContain: (expected) => {
+                        if (!actual.includes(expected)) {
+                            throw new Error(`Expected "${actual}" to contain "${expected}"`);
+                        }
+                    },
+                    toBeGreaterThan: (expected) => {
+                        if (actual <= expected) {
+                            throw new Error(`Expected ${actual} to be greater than ${expected}`);
+                        }
+                    },
+                    toBeLessThan: (expected) => {
+                        if (actual >= expected) {
+                            throw new Error(`Expected ${actual} to be less than ${expected}`);
+                        }
+                    }
+                };
+            }
+
+            addResult(description, passed, error = null) {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = `test-result ${passed ? 'test-pass' : 'test-fail'}`;
+                resultDiv.innerHTML = `
+                    <strong>${passed ? '✓' : '✗'} ${description}</strong>
+                    ${error ? `<br><small>Error: ${error}</small>` : ''}
+                `;
+                document.getElementById('test-results').appendChild(resultDiv);
+            }
+
+            showSummary() {
+                const total = this.passed + this.failed;
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = `test-summary ${this.failed === 0 ? 'test-pass-summary' : 'test-fail-summary'}`;
+                summaryDiv.innerHTML = `
+                    Test Summary: ${this.passed}/${total} tests passed
+                    ${this.failed > 0 ? `<br>${this.failed} tests failed` : ''}
+                `;
+                document.getElementById('test-results').appendChild(summaryDiv);
+            }
+        }
+
+        // Create test framework instance
+        const test = new TestFramework();
+
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            runTests();
+        });
+
+        function runTests() {
+            test.describe('MaharaApp Class Tests', () => {
+                test.it('should create MaharaApp instance', () => {
+                    const app = new MaharaApp();
+                    test.expect(app).toBeTruthy();
+                    test.expect(app.isInitialized).toBe(false);
+                    test.expect(app.currentPage).toBe('home');
+                });
+
+                test.it('should have bound methods', () => {
+                    const app = new MaharaApp();
+                    test.expect(typeof app.init).toBe('function');
+                    test.expect(typeof app.initializeComponents).toBe('function');
+                    test.expect(typeof app.setupEventListeners).toBe('function');
+                });
+            });
+
+            test.describe('Utility Functions Tests', () => {
+                test.it('should truncate text correctly', () => {
+                    const app = new MaharaApp();
+                    
+                    // Test normal truncation
+                    const result1 = app.truncateText('This is a long text that should be truncated', 20);
+                    test.expect(result1).toBe('This is a long text ...');
+                    
+                    // Test text shorter than max length
+                    const result2 = app.truncateText('Short text', 20);
+                    test.expect(result2).toBe('Short text');
+                    
+                    // Test empty text
+                    const result3 = app.truncateText('', 20);
+                    test.expect(result3).toBe('');
+                    
+                    // Test null/undefined text
+                    const result4 = app.truncateText(null, 20);
+                    test.expect(result4).toBe('');
+                });
+
+                test.it('should create star rating HTML correctly', () => {
+                    const app = new MaharaApp();
+                    
+                    // Test full rating
+                    const result1 = app.createStarRating(5);
+                    test.expect(result1).toContain('data-rating="5"');
+                    test.expect(result1).toContain('fas fa-star');
+                    
+                    // Test half rating
+                    const result2 = app.createStarRating(3.5);
+                    test.expect(result2).toContain('data-rating="3.5"');
+                    test.expect(result2).toContain('fa-star-half-alt');
+                    
+                    // Test zero rating
+                    const result3 = app.createStarRating(0);
+                    test.expect(result3).toContain('data-rating="0"');
+                    test.expect(result3).toContain('far fa-star');
+                });
+
+                test.it('should create service card HTML correctly', () => {
+                    const app = new MaharaApp();
+                    const mockService = {
+                        id: 1,
+                        title: 'Test Service',
+                        description: 'This is a test service description',
+                        images: ['test-image.jpg'],
+                        is_featured: true,
+                        avg_rating: 4.5,
+                        total_reviews: 10,
+                        wilaya: 'Algiers',
+                        formatted_price: '5000 DZD',
+                        provider: {
+                            name: 'Test Provider',
+                            profile_image: 'provider.jpg'
+                        }
+                    };
+                    
+                    const result = app.createServiceCard(mockService);
+                    test.expect(result).toContain('data-service-id="1"');
+                    test.expect(result).toContain('Test Service');
+                    test.expect(result).toContain('test-image.jpg');
+                    test.expect(result).toContain('Featured');
+                    test.expect(result).toContain('Algiers');
+                    test.expect(result).toContain('5000 DZD');
+                    test.expect(result).toContain('Test Provider');
+                });
+            });
+
+            test.describe('Component Initialization Tests', () => {
+                test.it('should initialize components without errors', () => {
+                    const app = new MaharaApp();
+                    
+                    // Mock DOM elements
+                    document.body.innerHTML = `
+                        <div id="mobile-menu-toggle"></div>
+                        <div id="nav-menu"></div>
+                        <form id="hero-search-form"></form>
+                        <input id="search-input" />
+                        <select id="location-select"></select>
+                        <button id="lang-btn"></button>
+                        <div id="lang-dropdown"></div>
+                        <button id="user-btn"></button>
+                        <div id="user-dropdown"></div>
+                    `;
+                    
+                    // Should not throw errors
+                    test.expect(() => app.initializeComponents()).not.toThrow();
+                });
+
+                test.it('should handle missing DOM elements gracefully', () => {
+                    const app = new MaharaApp();
+                    
+                    // Clear DOM
+                    document.body.innerHTML = '';
+                    
+                    // Should not throw errors even with missing elements
+                    test.expect(() => app.initializeComponents()).not.toThrow();
+                });
+            });
+
+            test.describe('Search Functionality Tests', () => {
+                test.it('should handle search input correctly', () => {
+                    const app = new MaharaApp();
+                    
+                    // Mock search method
+                    let searchCalled = false;
+                    app.handleSearchInput = (query) => {
+                        searchCalled = true;
+                        test.expect(query).toBe('test query');
+                    };
+                    
+                    app.handleSearchInput('test query');
+                    test.expect(searchCalled).toBe(true);
+                });
+            });
+
+            test.describe('Data Rendering Tests', () => {
+                test.it('should render categories correctly', () => {
+                    const app = new MaharaApp();
+                    
+                    // Mock DOM element
+                    document.body.innerHTML = '<div id="categories-grid"></div>';
+                    
+                    const mockCategories = [
+                        {
+                            id: 1,
+                            name: 'Test Category',
+                            description: 'Test Description',
+                            icon: 'fas fa-test',
+                            services_count: 5
+                        }
+                    ];
+                    
+                    app.renderCategories(mockCategories);
+                    
+                    const grid = document.getElementById('categories-grid');
+                    test.expect(grid.innerHTML).toContain('Test Category');
+                    test.expect(grid.innerHTML).toContain('Test Description');
+                    test.expect(grid.innerHTML).toContain('fas fa-test');
+                    test.expect(grid.innerHTML).toContain('5');
+                });
+
+                test.it('should render featured services correctly', () => {
+                    const app = new MaharaApp();
+                    
+                    // Mock DOM element
+                    document.body.innerHTML = '<div id="featured-services-grid"></div>';
+                    
+                    const mockServices = [
+                        {
+                            id: 1,
+                            title: 'Test Service',
+                            description: 'Test Description',
+                            images: ['test.jpg'],
+                            is_featured: false,
+                            avg_rating: 4.0,
+                            total_reviews: 5,
+                            wilaya: 'Algiers',
+                            formatted_price: '1000 DZD',
+                            provider: {
+                                name: 'Test Provider',
+                                profile_image: 'provider.jpg'
+                            }
+                        }
+                    ];
+                    
+                    app.renderFeaturedServices(mockServices);
+                    
+                    const grid = document.getElementById('featured-services-grid');
+                    test.expect(grid.innerHTML).toContain('Test Service');
+                    test.expect(grid.innerHTML).toContain('Test Description');
+                    test.expect(grid.innerHTML).toContain('Algiers');
+                    test.expect(grid.innerHTML).toContain('1000 DZD');
+                });
+
+                test.it('should handle empty services list', () => {
+                    const app = new MaharaApp();
+                    
+                    // Mock DOM element
+                    document.body.innerHTML = '<div id="featured-services-grid"></div>';
+                    
+                    app.renderFeaturedServices([]);
+                    
+                    const grid = document.getElementById('featured-services-grid');
+                    test.expect(grid.innerHTML).toContain('no-services');
+                    test.expect(grid.innerHTML).toContain('No featured services available');
+                });
+            });
+
+            // Show test summary
+            test.showSummary();
+        }
+    </script>
+</body>
+</html>
