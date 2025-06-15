@@ -23,5 +23,5 @@ WORKDIR /var/www/html
 # We'll use .htaccess for routing
 COPY .htaccess /var/www/html/
 
-# Expose port 80 (Apache default)
-EXPOSE 80
+# Expose port 8080 (Apache default)
+EXPOSE 8080
