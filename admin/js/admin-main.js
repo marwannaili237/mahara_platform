@@ -177,6 +177,11 @@ class AdminApp {
             this.modules.services = new AdminServices();
         }
 
+        // Initialize settings module
+        if (typeof AdminSettings !== 'undefined') {
+            this.modules.settings = new AdminSettings();
+        }
+
         // Initialize other modules as they are created
     }
 
@@ -257,8 +262,17 @@ class AdminApp {
     async loadPageData(pageName) {
         try {
             const module = this.modules[pageName];
-            if (module && typeof module.loadData === 'function') {
-                await module.loadData();
+            
+            if (module) {
+                // Initialize module if not already initialized
+                if (typeof module.init === 'function' && !module.isInitialized) {
+                    module.init();
+                }
+                
+                // Load data if method exists
+                if (typeof module.loadData === 'function') {
+                    await module.loadData();
+                }
             }
         } catch (error) {
             console.error(`Error loading ${pageName} data:`, error);

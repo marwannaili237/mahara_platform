@@ -416,7 +416,388 @@
                     </div>
                 </div>
 
-                <!-- Other pages will be added here -->
+                <!-- Bookings Page -->
+                <div class="page" id="bookings-page" style="display: none;">
+                    <div class="page-header">
+                        <h2>Booking Management</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-outline" id="export-bookings">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="filters-bar">
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <select id="booking-status-filter">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Date Range:</label>
+                            <select id="booking-date-filter">
+                                <option value="">All Dates</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Search:</label>
+                            <input type="text" placeholder="Search bookings..." id="booking-search">
+                        </div>
+                    </div>
+
+                    <!-- Bookings Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="bookings-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="select-all-bookings">
+                                    </th>
+                                    <th>Booking ID</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Provider</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookings-table-body">
+                                <!-- Bookings will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            Showing <span id="bookings-showing">0</span> of <span id="bookings-total">0</span> bookings
+                        </div>
+                        <div class="pagination" id="bookings-pagination">
+                            <!-- Pagination will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Page -->
+                <div class="page" id="reviews-page" style="display: none;">
+                    <div class="page-header">
+                        <h2>Review Management</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-outline" id="export-reviews">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="filters-bar">
+                        <div class="filter-group">
+                            <label>Rating:</label>
+                            <select id="review-rating-filter">
+                                <option value="">All Ratings</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <select id="review-status-filter">
+                                <option value="">All Status</option>
+                                <option value="approved">Approved</option>
+                                <option value="pending">Pending</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Search:</label>
+                            <input type="text" placeholder="Search reviews..." id="review-search">
+                        </div>
+                    </div>
+
+                    <!-- Reviews Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="reviews-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="select-all-reviews">
+                                    </th>
+                                    <th>Review</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Rating</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviews-table-body">
+                                <!-- Reviews will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            Showing <span id="reviews-showing">0</span> of <span id="reviews-total">0</span> reviews
+                        </div>
+                        <div class="pagination" id="reviews-pagination">
+                            <!-- Pagination will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories Page -->
+                <div class="page" id="categories-page" style="display: none;">
+                    <div class="page-header">
+                        <h2>Category Management</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" id="add-category">
+                                <i class="fas fa-plus"></i>
+                                Add Category
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Categories Grid -->
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div class="page" id="analytics-page" style="display: none;">
+                    <div class="page-header">
+                        <h2>Analytics Dashboard</h2>
+                        <div class="page-actions">
+                            <select id="analytics-period">
+                                <option value="week">Last 7 Days</option>
+                                <option value="month" selected>Last 30 Days</option>
+                                <option value="quarter">Last 3 Months</option>
+                                <option value="year">Last Year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number" id="analytics-revenue">0</h3>
+                                <p class="stat-label">Total Revenue</p>
+                                <span class="stat-change positive">+15% from last period</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number" id="analytics-bookings">0</h3>
+                                <p class="stat-label">Total Bookings</p>
+                                <span class="stat-change positive">+8% from last period</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number" id="analytics-customers">0</h3>
+                                <p class="stat-label">New Customers</p>
+                                <span class="stat-change positive">+12% from last period</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number" id="analytics-rating">0</h3>
+                                <p class="stat-label">Avg Rating</p>
+                                <span class="stat-change positive">+0.2 from last period</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Charts -->
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Revenue Trend</h3>
+                                <div class="card-actions">
+                                    <button class="btn btn-sm btn-outline">Export</button>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <canvas id="revenue-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Booking Status Distribution</h3>
+                            </div>
+                            <div class="card-content">
+                                <canvas id="booking-status-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>Top Services</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="top-services-list" id="top-services-list">
+                                    <!-- Top services will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>User Activity</h3>
+                            </div>
+                            <div class="card-content">
+                                <canvas id="user-activity-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings-page" style="display: none;">
+                    <div class="page-header">
+                        <h2>System Settings</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" id="save-settings">
+                                <i class="fas fa-save"></i>
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tabs -->
+                    <div class="settings-tabs">
+                        <div class="tab-nav">
+                            <button class="tab-btn active" data-tab="general">General</button>
+                            <button class="tab-btn" data-tab="email">Email</button>
+                            <button class="tab-btn" data-tab="payment">Payment</button>
+                            <button class="tab-btn" data-tab="security">Security</button>
+                        </div>
+
+                        <!-- General Settings -->
+                        <div class="tab-content active" id="general-tab">
+                            <div class="settings-section">
+                                <h3>Site Information</h3>
+                                <div class="form-group">
+                                    <label for="site-name">Site Name</label>
+                                    <input type="text" id="site-name" value="Mahara Platform">
+                                </div>
+                                <div class="form-group">
+                                    <label for="site-description">Site Description</label>
+                                    <textarea id="site-description" rows="3">Professional services marketplace in Algeria</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="site-email">Contact Email</label>
+                                    <input type="email" id="site-email" value="contact@mahara.dz">
+                                </div>
+                                <div class="form-group">
+                                    <label for="site-phone">Contact Phone</label>
+                                    <input type="tel" id="site-phone" value="+213 123 456 789">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Settings -->
+                        <div class="tab-content" id="email-tab">
+                            <div class="settings-section">
+                                <h3>SMTP Configuration</h3>
+                                <div class="form-group">
+                                    <label for="smtp-host">SMTP Host</label>
+                                    <input type="text" id="smtp-host" placeholder="smtp.gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtp-port">SMTP Port</label>
+                                    <input type="number" id="smtp-port" value="587">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtp-username">Username</label>
+                                    <input type="text" id="smtp-username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="smtp-password">Password</label>
+                                    <input type="password" id="smtp-password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Settings -->
+                        <div class="tab-content" id="payment-tab">
+                            <div class="settings-section">
+                                <h3>Payment Configuration</h3>
+                                <div class="form-group">
+                                    <label for="currency">Default Currency</label>
+                                    <select id="currency">
+                                        <option value="DZD" selected>Algerian Dinar (DZD)</option>
+                                        <option value="EUR">Euro (EUR)</option>
+                                        <option value="USD">US Dollar (USD)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="commission-rate">Commission Rate (%)</label>
+                                    <input type="number" id="commission-rate" value="10" min="0" max="100" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="tab-content" id="security-tab">
+                            <div class="settings-section">
+                                <h3>Security Configuration</h3>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="require-email-verification" checked>
+                                        Require email verification for new users
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="enable-two-factor" checked>
+                                        Enable two-factor authentication
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="session-timeout">Session Timeout (minutes)</label>
+                                    <input type="number" id="session-timeout" value="60" min="15" max="1440">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -451,12 +832,14 @@
     <!-- Modals for CRUD operations will be added here -->
 
     <!-- JavaScript -->
+    <script src="js/translation.js"></script>
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/admin-auth.js"></script>
     <script src="js/admin-dashboard.js"></script>
     <script src="js/admin-users.js"></script>
     <script src="js/admin-services.js"></script>
+    <script src="js/admin-settings.js"></script>
     <script src="js/admin-main.js"></script>
 </body>
 </html>
