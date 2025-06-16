@@ -177,6 +177,14 @@ class AdminApp {
             this.modules.services = new AdminServices();
         }
 
+        // Initialize settings module
+        if (typeof AdminSettings !== 'undefined') {
+            this.modules.settings = new AdminSettings();
+            console.log('Settings module created:', this.modules.settings);
+        } else {
+            console.error('AdminSettings class not found');
+        }
+
         // Initialize other modules as they are created
     }
 
@@ -256,9 +264,24 @@ class AdminApp {
     // Load page-specific data
     async loadPageData(pageName) {
         try {
+            console.log(`Loading page data for: ${pageName}`);
             const module = this.modules[pageName];
-            if (module && typeof module.loadData === 'function') {
-                await module.loadData();
+            console.log(`Module found:`, module);
+            
+            if (module) {
+                // Initialize module if not already initialized
+                if (typeof module.init === 'function' && !module.isInitialized) {
+                    console.log(`Initializing ${pageName} module`);
+                    module.init();
+                }
+                
+                // Load data if method exists
+                if (typeof module.loadData === 'function') {
+                    console.log(`Loading data for ${pageName} module`);
+                    await module.loadData();
+                }
+            } else {
+                console.log(`No module found for page: ${pageName}`);
             }
         } catch (error) {
             console.error(`Error loading ${pageName} data:`, error);
