@@ -25,12 +25,10 @@ class AdminSettings {
     setupEventListeners() {
         // Tab navigation
         const tabButtons = document.querySelectorAll('.tab-btn');
-        console.log('Found tab buttons:', tabButtons.length);
         tabButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tabName = e.target.getAttribute('data-tab');
-                console.log('Tab clicked:', tabName);
                 this.switchTab(tabName);
             });
         });
@@ -44,33 +42,24 @@ class AdminSettings {
 
     // Switch between tabs
     switchTab(tabName) {
-        console.log('Switching to tab:', tabName);
-        
         // Update active tab button
         const tabButtons = document.querySelectorAll('.tab-btn');
-        console.log('Found tab buttons for switching:', tabButtons.length);
         tabButtons.forEach(btn => {
             btn.classList.remove('active');
             if (btn.getAttribute('data-tab') === tabName) {
                 btn.classList.add('active');
-                console.log('Activated tab button:', tabName);
             }
         });
 
         // Update active tab content
         const tabContents = document.querySelectorAll('.tab-content');
-        console.log('Found tab contents:', tabContents.length);
         tabContents.forEach(content => {
             content.classList.remove('active');
         });
 
         const targetTab = document.getElementById(`${tabName}-tab`);
-        console.log('Target tab element:', targetTab);
         if (targetTab) {
             targetTab.classList.add('active');
-            console.log('Activated tab content:', tabName);
-        } else {
-            console.error('Tab content not found:', `${tabName}-tab`);
         }
 
         this.currentTab = tabName;
